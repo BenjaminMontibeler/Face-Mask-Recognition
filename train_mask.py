@@ -225,7 +225,7 @@ data_augmentation = keras.Sequential(
 model = Sequential()
 model.add(Flatten())
 model.add(Dense(128, activation='linear'))
-model.add(LeakyReLU(alpha=0.1))                  
+model.add(LeakyReLU(alpha=0.02))                  
 model.add(Dense(2, activation='softmax'))
 
 #base model
