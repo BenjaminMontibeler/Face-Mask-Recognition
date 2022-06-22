@@ -77,14 +77,7 @@ print(labels)
 label_counts = pd.DataFrame(labels).value_counts()
 
 print(data.shape, labels.shape)
-#(trainX, testX, trainY, testY) = train_test_split(data, labels,
-	#test_size=0.20, stratify=labels, random_state=8)
 
-# Normalize and reshape data
-#trainX = np.array(trainX, dtype=np.float16) / 225.0
-#trainX = trainX.reshape(-1,500,500,3)
-#testX = np.array(testX, dtype=np.float16) / 225.0
-#testX = testX.reshape(-1,500,500,3)
 
 
 
@@ -92,10 +85,6 @@ print(data.shape, labels.shape)
 (trainX, valX, trainY, valY) = train_test_split(data, labels, 
     test_size=0.25, stratify=labels, random_state= 8)
 
-
-#print(trainX.shape,valX.shape,trainY.shape, valY.shape)
-
-#augmentation
 
 
 
@@ -118,33 +107,8 @@ aug = ImageDataGenerator(
 	fill_mode="nearest")
 
 
-# Label binarizing
-#lb = LabelBinarizer()
-#trainY = lb.fit_transform(trainY)
-#valY = lb.fit_transform(valY)
-"""
-# Building model architecture
-model = Sequential()
-model.add(Conv2D(64, (3, 3), padding="same",input_shape=(500,500,3), activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(128, (3, 3), padding="same", activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Conv2D(246, (3, 3), padding="same", activation="relu"))
-model.add(MaxPooling2D(pool_size=(2, 2)))
-model.add(Dropout(0.5))
-model.add(Flatten())
-model.add(Dense(128, activation="relu"))
-model.add(Dense(1, activation="sigmoid"))
 
 
-# Compiling model
-model.compile(loss = 'binary_crossentropy', optimizer = Adam(0.0005),metrics=['accuracy'])
-model.summary()
-# Training the model
-epochs = 20
-batch_size = 128
-history = model.fit(trainX, trainY, batch_size = batch_size, epochs = epochs, validation_data = (valX, valY))
-"""
 #konvolucijska
 """
 
@@ -234,58 +198,11 @@ for i, incorrect in enumerate(incorrect[:9]):
     plt.title("Predicted {}, Class {}".format(predicted_classes[incorrect], valY[incorrect]))
     plt.tight_layout()
 """
-#clasiffication report
-#predicted_classes = model.predict(valX)
-#from sklearn.metrics import classification_report
-#target_names = ["Class {}".format(i) for i in range(2)]
-#print(classification_report(valY, predicted_classes, target_names=target_names))
-
-
 
 
 
 # Building a model with transfer learning
-"""
-model = Sequential()
-model.add(ResNet50(include_top = False, pooling = 'avg', weights='imagenet'))
-model.add(Dense(2, activation = 'softmax'))
 
-model.layers[0].trainable = False
-#compile the model with your favourite optimizer, loss function and metrics 
-model.compile(optimizer = "adam", loss = "categorical_crossentropy", metrics = "accuracy")
-"""
-
-
-
-
-
-"""
-data_augmentation = keras.Sequential(
-    [       keras.layers.experimental.preprocessing.RandomFlip("horizontal"),
-   keras.layers.experimental.preprocessing.RandomRotation(0.1),
-    ]
-)
-
-base_model = keras.applications.Xception(
-    weights='imagenet',  
-    input_shape=(256, 256, 3),
-    include_top=False)
-
-base_model.trainable = False
-
-inputs = keras.Input(shape=(256, 256, 3))
-
-x = data_augmentation(inputs) 
-
-x = tf.keras.applications.xception.preprocess_input(x)
-
-x = base_model(x, training=False)
-x = keras.layers.GlobalAveragePooling2D()(x)
-x = keras.layers.Dropout(0.2)(x)  
-outputs = keras.layers.Dense(2)(x)
-model = keras.Model(inputs, outputs)
-model.compile(optimizer='adam', loss=tf.keras.losses.CategoricalCrossentropy(from_logits=True),metrics=keras.metrics.CategoricalAccuracy())
-"""
 
 
 
